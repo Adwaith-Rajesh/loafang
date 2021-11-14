@@ -22,14 +22,17 @@ class HeaderParser:
         self.header = header
 
     def parse(self) -> Union[Tuple[Header, None, None], Tuple[None, int, str]]:
-        parts = self.header.split(":")
+        parts = [part for part in self.header.split(":") if part]
         rv = Header("", "", "")
 
         if len(parts) == 0:
             return (None, 600, "The header cannot be empty.")
 
+        if len(parts) == 1:
+            return (None, 603, "Missing ID.")
+
         if len(parts) > 3:
-            return (None, 600, "The header cannot be more that 3 parts.")
+            return (None, 600, "The header cannot be more than 3 parts.")
 
         if len(parts) >= 2:
             if parts[0] in METHODS:
@@ -45,7 +48,7 @@ class HeaderParser:
                     rv.property_key = parts[2]
 
                 else:
-                    return (None, 602, f"The property {parts[2]!r} does not exists.")
+                    return (None, 602, f"The property key {parts[2]!r} does not exists.")
 
         return (rv, None, None)
 
