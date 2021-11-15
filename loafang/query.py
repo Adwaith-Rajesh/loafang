@@ -1,10 +1,6 @@
 import argparse
+from typing import Any
 from typing import Callable
-from typing import Generic
-from typing import TypeVar
-
-
-T = TypeVar('T')
 
 
 def gen_arg_name(name: str) -> str:
@@ -18,7 +14,7 @@ def gen_arg_name(name: str) -> str:
     return "--" + "-".join(i for i in name.split('-') if i)
 
 
-class QueryBuilder(Generic[T]):
+class QueryBuilder:
 
     def __init__(self, head: str) -> None:
 
@@ -27,6 +23,6 @@ class QueryBuilder(Generic[T]):
         self._inner_parser = argparse.ArgumentParser(add_help=False)
         self._inner_parser.add_argument(str(head), type=str)
 
-    def add_argument(self, name: str, type: Callable[[str], T], default: T) -> None:
+    def add_argument(self, name: str, type: Callable[[str], Any], default: Any) -> None:
         self._inner_parser.add_argument(
             gen_arg_name(name), type=type, default=default)
