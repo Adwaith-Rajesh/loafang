@@ -18,6 +18,7 @@ class Header:
 @dataclass
 class ListQuery:
     # used when the method is get, delete
+    head: str
     args: Namespace
     contents: List[str] = field(default_factory=list)
 
@@ -25,6 +26,7 @@ class ListQuery:
 @dataclass
 class DictQuery:
     # used when the values passed for methods are key value pairs
+    head: str
     args: Namespace
     contents: Dict[str, Any] = field(default_factory=dict)
 
