@@ -1,9 +1,22 @@
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
 from typing import Tuple
 from typing import Union
 
 from ._const import METHODS
 from ._const import PROPERTY_KEYS
+from ._dataclasses import DictQuery
+from ._dataclasses import ExecutionBlock
 from ._dataclasses import Header
+from ._dataclasses import ListQuery
+from .query import QueryBuilder
+
+
+blockType = Dict[str, Dict[str, Union[List[str], Dict[str, Any], str]]]
+queryType = Dict[str, Union[List[str], Dict[str, Any], str]]
+queryContentType = Union[ListQuery, DictQuery]
 
 
 class HeaderParser:
@@ -54,4 +67,78 @@ class HeaderParser:
 
 
 class QueryParser:
-    pass
+
+    def __init__(self, query: queryType, method: str, parser: QueryBuilder) -> None:
+        self.query = query
+        self.method = method
+        self.parser = parser
+
+    def parse(self) -> Union[Tuple[queryContentType, None, None], Tuple[None, int, str]]:
+
+        args_str = list(self.query)[0]
+        contents = list(self.query.values())[0]
+
+        if self.method == "GET" or self.method == "DELETE":
+            if not isinstance(contents, list):
+                return (None, 605, "The content container type must be a list for GET and DELETE")
+
+        else:
+            if not isinstance(contents, dict):
+                return (None, 605, "The content container type must be dict for POST, PUT, and PATCH")
+
+        args, _ = self.parser._inner_parser.parse_known_args(args_str.split())
+        head = getattr(args, self.parser._head)
+
+        delattr(args, self.parser._head)
+
+        if self.method in ["GET", "POST"]:
+            if isinstance(contents, list):
+                return (ListQuery(head=head, args=args, contents=contents), None, None)
+
+        else:
+            if isinstance(contents, dict):
+                return (DictQuery(head=head, args=args, contents=contents), None, None)
+
+        return (None, 600, "Something went wrong")
+
+
+class BlockParser:
+
+    """
+    Uses the other two parsers to parser the block
+    """
+
+    def __init__(self, block: blockType, methods_dict: Dict[str, Optional[QueryBuilder]]) -> None:
+        self.block = block
+        self.methods_dict = methods_dict
+
+    def parse(self) -> Union[Tuple[ExecutionBlock, None, None], Tuple[None, int, str]]:
+        header, err, msg = HeaderParser(list(self.block.keys())[0]).parse()
+
+        if not header and err and msg:
+            return (None, err, msg)
+
+        queries = []
+
+        if header:
+
+            for q, c in list(self.block.values())[0].items():
+
+                curr_parser = self.methods_dict[header.method]
+
+                if curr_parser:
+
+                    query, err, msg = QueryParser(
+                        {q: c}, header.method, curr_parser).parse()
+                    if query:
+                        queries.append(query)
+
+                    else:
+                        if err and msg:
+                            return (None, err, msg)
+
+                else:
+                    return (None, 606, "The parser for the given request methods does not exists")
+
+            return (ExecutionBlock(header=header, after=None, query=queries), None, None)
+        return (None, 600, "something went wrong")

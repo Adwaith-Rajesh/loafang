@@ -34,7 +34,7 @@ class DictQuery:
 @dataclass
 class ExecutionBlock:
     header: Header
-    after: 'ExecutionBlock'
+    after: Optional['ExecutionBlock'] = None
     query: List[Union[ListQuery, DictQuery]] = field(default_factory=list)
 
 
