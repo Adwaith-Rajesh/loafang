@@ -91,7 +91,7 @@ class QueryParser:
 
         delattr(args, self.parser._head)
 
-        if self.method in ["GET", "POST"]:
+        if self.method in ["GET", "DELETE"]:
             if isinstance(contents, list):
                 return (ListQuery(head=head, args=args, contents=contents), None, None)
 
