@@ -21,13 +21,13 @@ def test_header_parser_pass(input, output):
 @pytest.mark.parametrize(
     'input,output',
     (
-        ("get", (None, 603, "Missing ID.")),
-        ("GETS", (None, 603, "Missing ID.")),
-        ("GETS:test-id", (None, 601, "The method 'GETS' does not exists.")),
-        ("get:test-id", (None, 601, "The method 'get' does not exists.")),
-        ("", (None, 600, "The header cannot be empty.")),
+        ("get", (None, 604, "Missing ID.")),
+        ("GETS", (None, 604, "Missing ID.")),
+        ("GETS:test-id", (None, 602, "The method 'GETS' does not exists.")),
+        ("get:test-id", (None, 602, "The method 'get' does not exists.")),
+        ("", (None, 601, "The header cannot be empty.")),
         ("GET:id:pe:test", (None, 600, "The header cannot be more than 3 parts.")),
-        ("GET:id:p4", (None, 602, "The property key 'p4' does not exists.")),
+        ("GET:id:p4", (None, 603, "The property key 'p4' does not exists.")),
     )
 )
 def test_header_parser_error(input, output):
