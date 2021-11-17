@@ -24,20 +24,20 @@ class Methods(ABC):
 
     @abstractmethod
     def get(self, args: Namespace, content: List[str]) -> Any:
-        raise NotImplementedError("To be overridden.")
+        return None
 
     @abstractmethod
     def post(self, args: Namespace, content: Dict[str, Any]) -> Any:
-        raise NotImplementedError("To be overridden")
+        return None
 
     @abstractmethod
     def put(self, args: Namespace, content: Dict[str, Any]) -> Any:
-        raise NotImplementedError("To be overridden")
+        return None
 
     @abstractmethod
     def delete(self, args: Namespace, contents: List[str]) -> Any:
-        raise NotImplementedError("To be overridden")
+        return None
 
     @abstractmethod
     def patch(self, args: Namespace, content: Dict[str, Any]) -> Any:
-        raise NotImplementedError("To be overridden")
+        return None
