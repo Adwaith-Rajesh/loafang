@@ -9,3 +9,6 @@
   - eg: Get, Delete, must have a list as its content container
   - eg: All the other methods must have dict as their content container.
 - 606 -> Parser does not exists for the given request method
+- 607 -> Two Execution Blocks cannot have the same ID's
+- 608 -> The after key must be a string
+- 609 -> The Execution block with the given ID does not exists
