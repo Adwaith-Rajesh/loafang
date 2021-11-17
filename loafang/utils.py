@@ -13,6 +13,7 @@ def err_msg(code: int) -> str:
 def map_parser(methods: Methods, parser: QueryBuilder, apply_to: List[str] = []) -> Methods:
     if not apply_to:
         apply_to = [i.lower() for i in METHODS]
+        others = []
 
     else:
         apply_to = [i.lower() for i in apply_to if i.upper() in METHODS]
