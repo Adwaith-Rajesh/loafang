@@ -48,7 +48,7 @@ def block_executor(ebs: List[ExecutionBlock], pes: List[ExecutionBlock], methods
     for eb in ebs:
         if eb.after:
             if eb.after not in pes_ids:
-                return (None, 609,
+                return (None, 610,
                         f"The 'after' execution block {eb.after!r} does not exists for the block {eb.header.id!r}")
 
         temp_data[eb.header.id] = block_output(eb)

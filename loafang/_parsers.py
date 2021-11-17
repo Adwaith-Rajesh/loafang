@@ -12,6 +12,7 @@ from ._dataclasses import ExecutionBlock
 from ._dataclasses import Header
 from ._dataclasses import ListQuery
 from .query import QueryBuilder
+from .utils import err_msg
 
 
 blockType = Dict[str, Dict[str, Union[List[str], Dict[str, Any], str]]]
@@ -39,10 +40,10 @@ class HeaderParser:
         rv = Header("", "", "")
 
         if len(parts) == 0:
-            return (None, 600, "The header cannot be empty.")
+            return (None, 601, err_msg(601))
 
         if len(parts) == 1:
-            return (None, 603, "Missing ID.")
+            return (None, 604, err_msg(604))
 
         if len(parts) > 3:
             return (None, 600, "The header cannot be more than 3 parts.")
@@ -54,14 +55,14 @@ class HeaderParser:
                 rv.property_key = None
 
             else:
-                return (None, 601, f"The method {parts[0]!r} does not exists.")
+                return (None, 602, f"The method {parts[0]!r} does not exists.")
         if len(parts) == 3:
             if parts[2]:
                 if parts[2] in PROPERTY_KEYS:
                     rv.property_key = parts[2]
 
                 else:
-                    return (None, 602, f"The property key {parts[2]!r} does not exists.")
+                    return (None, 603, f"The property key {parts[2]!r} does not exists.")
 
         return (rv, None, None)
 
@@ -80,11 +81,11 @@ class QueryParser:
 
         if self.method == "GET" or self.method == "DELETE":
             if not isinstance(contents, list):
-                return (None, 605, "The content container type must be a list for GET and DELETE")
+                return (None, 606, "The content container type must be a list for GET and DELETE")
 
         else:
             if not isinstance(contents, dict):
-                return (None, 605, "The content container type must be dict for POST, PUT, and PATCH")
+                return (None, 606, "The content container type must be dict for POST, PUT, and PATCH")
 
         args, _ = self.parser._inner_parser.parse_known_args(args_str.split())
         head = getattr(args, self.parser._head)
@@ -99,7 +100,7 @@ class QueryParser:
             if isinstance(contents, dict):
                 return (DictQuery(head=head, args=args, contents=contents, query=args_str), None, None)
 
-        return (None, 600, "Something went wrong")
+        return (None, 600, err_msg(600))
 
 
 class BlockParser:
@@ -127,7 +128,7 @@ class BlockParser:
 
                 if q == "after":
                     if not isinstance(c, str):
-                        return (None, 608, "The values to after key must be a string")
+                        return (None, 609, err_msg(609))
 
                     else:
                         after = c
@@ -147,7 +148,7 @@ class BlockParser:
                             return (None, err, msg)
 
                 else:
-                    return (None, 606, "The parser for the given request methods does not exists")
+                    return (None, 607, f"Parser does not exists for {header.method!r}")
 
             return (ExecutionBlock(header=header, after=after, query=queries), None, None)
-        return (None, 600, "something went wrong")
+        return (None, 600, err_msg(600))
