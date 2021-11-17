@@ -36,12 +36,14 @@ class DictQuery:
 @dataclass
 class ExecutionBlock:
     header: Header
-    after: Optional['ExecutionBlock'] = None
+    after: Optional[str] = None
     query: List[Union[ListQuery, DictQuery]] = field(default_factory=list)
 
 
 @dataclass
 class ParserState:
     ids: List[str] = field(default_factory=list)
+    # list of all the execution blocks
+    ebs: List[ExecutionBlock] = field(default_factory=list)
     # list all the execution block that pe as their property key
     pes: List[ExecutionBlock] = field(default_factory=list)

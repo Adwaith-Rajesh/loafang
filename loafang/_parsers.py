@@ -119,10 +119,19 @@ class BlockParser:
             return (None, err, msg)
 
         queries = []
+        after: Optional[str] = None
 
         if header:
 
             for q, c in list(self.block.values())[0].items():
+
+                if q == "after":
+                    if not isinstance(c, str):
+                        return (None, 608, "The values to after key must be a string")
+
+                    else:
+                        after = c
+                        continue
 
                 curr_parser = self.methods_dict[header.method]
 
@@ -140,5 +149,5 @@ class BlockParser:
                 else:
                     return (None, 606, "The parser for the given request methods does not exists")
 
-            return (ExecutionBlock(header=header, after=None, query=queries), None, None)
+            return (ExecutionBlock(header=header, after=after, query=queries), None, None)
         return (None, 600, "something went wrong")
