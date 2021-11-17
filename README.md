@@ -1,5 +1,9 @@
 # Loafang
 
+[![GitHub](https://img.shields.io/github/license/Adwaith-Rajesh/loafang?style=for-the-badge)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/loafang?color=light&style=for-the-badge)](https://pypi.org/project/loafang/)
+[![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/adwaithrajesh/8d11fcc8-9bf7-41cf-95af-bd240456c13e/9/master?label=azure%20pipelines&style=for-the-badge)](https://dev.azure.com/adwaithrajesh/adwaith/_build?definitionId=9)
+
 A JSON based RESTapi Query Language. It's mainly for small to intermediate sized project.
 
 ## Motivation
@@ -26,7 +30,13 @@ If you google the synonyms for 'rest' one of the result is 'loaf' or 'loafing'. 
 		"user --name some-user": {
 			"email": "new_email@address.com"
 		},
-		"after:GET": "get-user"
+		"after": "get-user"
 	}
 }
 ```
+
+## Road Map
+
+- [x] Things kind of works
+- [ ] Make an easier API for the user to use.
+- [ ] More tests
