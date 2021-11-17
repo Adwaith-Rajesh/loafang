@@ -20,6 +20,7 @@ class ListQuery:
     # used when the method is get, delete
     head: str
     args: Namespace
+    query: str  # the original query that was sent
     contents: List[str] = field(default_factory=list)
 
 
@@ -28,6 +29,7 @@ class DictQuery:
     # used when the values passed for methods are key value pairs
     head: str
     args: Namespace
+    query: str
     contents: Dict[str, Any] = field(default_factory=dict)
 
 

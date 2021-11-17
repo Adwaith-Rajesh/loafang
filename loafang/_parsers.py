@@ -93,11 +93,11 @@ class QueryParser:
 
         if self.method in ["GET", "DELETE"]:
             if isinstance(contents, list):
-                return (ListQuery(head=head, args=args, contents=contents), None, None)
+                return (ListQuery(head=head, args=args, contents=contents, query=args_str), None, None)
 
         else:
             if isinstance(contents, dict):
-                return (DictQuery(head=head, args=args, contents=contents), None, None)
+                return (DictQuery(head=head, args=args, contents=contents, query=args_str), None, None)
 
         return (None, 600, "Something went wrong")
 
