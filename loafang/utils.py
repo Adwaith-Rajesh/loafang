@@ -7,7 +7,7 @@ from .query import QueryBuilder
 
 
 def err_msg(code: int) -> str:
-    return ERROR_CODES.get(code, default="")
+    return ERROR_CODES.get(code, "")
 
 
 def map_parser(methods: Methods, parser: QueryBuilder, apply_to: List[str] = []) -> Methods:
