@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Dict
 from typing import List
+from typing import Optional
 from typing import Tuple
 from typing import Union
 
@@ -29,14 +30,22 @@ def block_executor(ebs: List[ExecutionBlock], pes: List[ExecutionBlock], methods
 
     pes_ids = {i.header.id: i for i in pes}
     req_methods_dict = {i: getattr(methods, i.lower()) for i in METHODS}
+    block_output_err: Optional[Tuple[None, int, str]] = None
 
     def block_output(block: ExecutionBlock) -> Any:
+        nonlocal block_output_err
 
         q_data = {}
 
         for q in block.query:
-            q_data[q.query] = req_methods_dict[block.header.method](
-                q.args, q.contents)
+            try:
+                q_data[q.query] = req_methods_dict[block.header.method](
+                    q.args, q.contents)
+            except NotImplementedError:
+                block_output_err = (
+                    None, 611, f"{block.header.method!r} is not implemented")
+                print(block.header.id)
+                return None
 
         if block.after:
             q_data["after"] = block_output(pes_ids[block.after])
@@ -51,22 +60,23 @@ def block_executor(ebs: List[ExecutionBlock], pes: List[ExecutionBlock], methods
                 return (None, 610,
                         f"The 'after' execution block {eb.after!r} does not exists for the block {eb.header.id!r}")
 
-        temp_data[eb.header.id] = block_output(eb)
+        val = block_output(eb)
 
-    return (temp_data, None, None)
+        if val:
+            temp_data[eb.header.id] = val
+
+        else:
+            break
+
+    return (temp_data, None, None) if not block_output_err else block_output_err
 
 
 def parse(methods: Methods, data: object) -> parserReturnType:
 
     curr_state = ParserState()
 
-    methods_dict = {
-        "GET": methods.get_query_parser,
-        "POST": methods.post_query_parser,
-        "PUT": methods.put_query_parser,
-        "PATCH": methods.patch_query_parser,
-        "DELETE": methods.delete_query_parser,
-    }
+    methods_dict = {i: getattr(
+        methods, f"{i.lower()}_query_parser", None) for i in METHODS}
 
     data = verify_data_type(data)
 

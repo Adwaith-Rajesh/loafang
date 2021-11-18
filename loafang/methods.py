@@ -1,5 +1,3 @@
-from abc import ABC
-from abc import abstractmethod
 from argparse import Namespace
 from typing import Any
 from typing import Dict
@@ -12,9 +10,8 @@ if TYPE_CHECKING:
 
 
 # this class is what is used to generate the output for the each query in the execution block
-class Methods(ABC):
+class Methods:
 
-    @abstractmethod
     def __init__(self) -> None:
         self.get_query_parser: Optional[QueryBuilder] = None
         self.post_query_parser: Optional[QueryBuilder] = None
@@ -22,22 +19,17 @@ class Methods(ABC):
         self.delete_query_parser: Optional[QueryBuilder] = None
         self.patch_query_parser: Optional[QueryBuilder] = None
 
-    @abstractmethod
     def get(self, args: Namespace, content: List[str]) -> Any:
-        return None
+        raise NotImplementedError("GET is not implemented")
 
-    @abstractmethod
     def post(self, args: Namespace, content: Dict[str, Any]) -> Any:
-        return None
+        raise NotImplementedError("POST is not implemented")
 
-    @abstractmethod
     def put(self, args: Namespace, content: Dict[str, Any]) -> Any:
-        return None
+        raise NotImplementedError("PUT is not implemented")
 
-    @abstractmethod
-    def delete(self, args: Namespace, contents: List[str]) -> Any:
-        return None
+    def delete(self, args: Namespace, content: List[str]) -> Any:
+        raise NotImplementedError("DELETE is not implemented")
 
-    @abstractmethod
     def patch(self, args: Namespace, content: Dict[str, Any]) -> Any:
-        return None
+        raise NotImplementedError("PATCH is not implemented")
