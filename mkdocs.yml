@@ -1,0 +1,6 @@
+site_name: Loafang
+theme:
+  name: material
+
+nav:
+  - Home: index.md
