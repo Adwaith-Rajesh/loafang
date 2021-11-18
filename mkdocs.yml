@@ -1,6 +1,34 @@
 site_name: Loafang
 theme:
   name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+      primary: red
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+      primary: red
+  icon:
+    repo: fontawesome/brands/github
 
 nav:
-  - Home: index.md
+  - Loafang: index.md
+repo_url: https://github.com/Adwaith-Rajesh/loafang
+repo_name: Adwaith-Rajesh/loafang
+
+extra:
+  social:
+   - icon: fontawesome/brands/github
+     link: https://github.com/Adwaith-Rajesh
+   - icon: fontawesome/brands/twitter
+     link: https://twitter.com/adwaith__rajesh
+   - icon: fontawesome/brands/instagram
+     link: https://instagram.com/adwaith__rajesh
+   - icon: fontawesome/brands/discord
+     link: https://discord.gg/BxMbWzZe2Z

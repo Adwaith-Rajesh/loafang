@@ -1,17 +1,36 @@
-# Welcome to MkDocs
+# Loafang
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+<p align="center">
+  <img src="assets/logo.svg" />
+  <h6 align="center">
+  An easier more readable version of graphql with small learning curve</h6>
+</p>
 
-## Commands
+---
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+**Documentation**: [https://Adwaith-Rajesh.github.io/loafang](https://Adwaith-Rajesh.github.io/loafang)
 
-## Project layout
+**Source Code**: [https://github.com/Adwaith-Rajesh/loafang](https://github.com/Adwaith-Rajesh/loafang)
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+---
+
+Loafang is simple, easier more readable alternative for graphql.
+
+Some for the key features.
+
+- **Intuitive**: The query style used by loafang is easy to read, and gives the user a complete picture on what an execution block does and also on the all the queries in the execution block.
+- **Easy**: Designed to be easy to use and learn. Less time reading docs.
+
+- And more on the way
+
+## Requirements
+
+Python 3.7.1 + (Loafang makes a great of dataclasses which is not supported in python3.6 by default)
+
+Loafang currently does not require any external dependency to function.
+
+## Installation
+
+```bash
+pip3 install loafang
+```
