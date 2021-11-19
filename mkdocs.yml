@@ -19,6 +19,7 @@ theme:
 
 nav:
   - Loafang: index.md
+  - Parts of a loafang query: query-parts.md
 repo_url: https://github.com/Adwaith-Rajesh/loafang
 repo_name: Adwaith-Rajesh/loafang
 
@@ -32,3 +33,8 @@ extra:
      link: https://instagram.com/adwaith__rajesh
    - icon: fontawesome/brands/discord
      link: https://discord.gg/BxMbWzZe2Z
+
+
+markdown_extensions:
+  - attr_list
+  - md_in_html

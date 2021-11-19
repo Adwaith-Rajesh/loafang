@@ -14,3 +14,4 @@
 - 609 -> The after key must be a string
 - 610 -> The Execution block with the given ID does not exists
 - 611 -> Methods is not implemented
+- 612 -> Execution bock with pe property key cannot have an after key
