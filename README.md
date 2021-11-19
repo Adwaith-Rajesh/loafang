@@ -19,8 +19,6 @@ If you google the synonyms for 'rest' one of the result is 'loaf' or 'loafing'. 
 
 ## An example Schema
 
-> This is not fixed, but this is what I hope it will look like.
-
 ```json
 {
 	"GET:get-user:pe": {
@@ -35,8 +33,10 @@ If you google the synonyms for 'rest' one of the result is 'loaf' or 'loafing'. 
 }
 ```
 
+For more docs visit: [https://adwaith-rajesh.github.io/loafang/](https://adwaith-rajesh.github.io/loafang/)
+
 ## Road Map
 
 - [x] Things kind of works
-- [ ] Make an easier API for the user to use.
+- [x] Make an easier API for the user to use.
 - [ ] More tests

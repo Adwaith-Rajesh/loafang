@@ -99,7 +99,7 @@ This is a sample query inside an execution block.
 
 Here,
 
-`user` if the head of the query or where the query the query need to executed, this can be a database name or anything like that.
+`user` is the head of the query or where the query needs to executed, this can be a database name or anything like that.
 
 `--name john` is the parameter to the query. These can be parameter to filter the head.
 

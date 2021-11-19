@@ -8,7 +8,7 @@ from loafang.utils import err_msg
     (
         (600, "Something went wrong."),
         (605, "Invalid data type for the argument in the query."),
-        (612, ""),
+        (612, "Execution block with pe property key cannot have an after key"),
         (500, "")
     )
 )
