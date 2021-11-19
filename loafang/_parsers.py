@@ -88,17 +88,14 @@ class QueryParser:
                 return (None, 606, "The content container type must be dict for POST, PUT, and PATCH")
 
         args, _ = self.parser._inner_parser.parse_known_args(args_str.split())
-        head = getattr(args, self.parser._head)
-
-        delattr(args, self.parser._head)
 
         if self.method in ["GET", "DELETE"]:
             if isinstance(contents, list):
-                return (ListQuery(head=head, args=args, contents=contents, query=args_str), None, None)
+                return (ListQuery(args=args, contents=contents, query=args_str), None, None)
 
         else:
             if isinstance(contents, dict):
-                return (DictQuery(head=head, args=args, contents=contents, query=args_str), None, None)
+                return (DictQuery(args=args, contents=contents, query=args_str), None, None)
 
         return (None, 600, err_msg(600))
 
