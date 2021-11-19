@@ -21,6 +21,8 @@ ERROR_CODES = {
     607: "Parser does not exists for the given request method.",
     608: "Two Execution Blocks cannot have the same ID's.",
     609: "The after key must be a string",
-    610: "The Execution block with the given ID does not exists"
+    610: "The Execution block with the given ID does not exists",
+    611: "Methods is not implemented",
+    612: "Execution block with pe property key cannot have an after key"
 
 }

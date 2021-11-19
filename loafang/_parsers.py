@@ -124,12 +124,17 @@ class BlockParser:
             for q, c in list(self.block.values())[0].items():
 
                 if q == "after":
-                    if not isinstance(c, str):
-                        return (None, 609, err_msg(609))
 
+                    if header.property_key != "pe":
+
+                        if not isinstance(c, str):
+                            return (None, 609, err_msg(609))
+
+                        else:
+                            after = c
+                            continue
                     else:
-                        after = c
-                        continue
+                        return (None, 612, err_msg(612))
 
                 curr_parser = self.methods_dict[header.method]
 
