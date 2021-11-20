@@ -39,7 +39,7 @@ def block_executor(ebs: List[ExecutionBlock], pes: List[ExecutionBlock], methods
 
         for q in block.query:
             try:
-                q_data[q.query] = req_methods_dict[block.header.method](
+                q_data[q.alias if q.alias else q.query] = req_methods_dict[block.header.method](
                     q.args, q.contents)
             except NotImplementedError:
                 block_output_err = (
@@ -93,7 +93,6 @@ def parse(methods: Methods, data: object) -> parserReturnType:
 
                     if eb.header.property_key == "pe":
                         curr_state.pes.append(eb)
-
                     else:
                         curr_state.ebs.append(eb)
             else:
