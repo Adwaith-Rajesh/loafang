@@ -39,8 +39,7 @@ class QueryBuilder:
 
         self._head = str(head)  # to be used during the final parsing
 
-        self._inner_parser = CArgumentParser(
-            add_help=False, exit_on_error=False)  # type: ignore
+        self._inner_parser = CArgumentParser(add_help=False)
         self._inner_parser.add_argument(str(head), type=str)
 
     def add_argument(self, name: str, type: Callable[[str], Any], default: Any = None) -> None:

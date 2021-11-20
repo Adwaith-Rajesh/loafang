@@ -174,6 +174,5 @@ class BlockParser:
 
                 else:
                     return (None, 607, f"Parser does not exists for {header.method!r}")
-            print(self.block_query_aliases)
             return (ExecutionBlock(header=header, after=after, query=queries), None, None)
         return (None, 600, err_msg(600))
