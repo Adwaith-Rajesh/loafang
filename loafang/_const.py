@@ -23,6 +23,7 @@ ERROR_CODES = {
     609: "The after key must be a string",
     610: "The Execution block with the given ID does not exists",
     611: "Methods is not implemented",
-    612: "Execution block with pe property key cannot have an after key"
-
+    612: "Execution block with pe property key cannot have an after key",
+    613: "Two queries in a block cannot have the same alias",
+    614: "Parser Error"
 }

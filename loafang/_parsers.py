@@ -1,3 +1,4 @@
+from argparse import ArgumentError
 from typing import Any
 from typing import Dict
 from typing import List
@@ -12,6 +13,7 @@ from ._dataclasses import ExecutionBlock
 from ._dataclasses import Header
 from ._dataclasses import ListQuery
 from .query import QueryBuilder
+from .query import QueryBuilderError
 from .utils import err_msg
 
 
@@ -79,7 +81,7 @@ class QueryParser:
         args_str = list(self.query)[0]
         contents = list(self.query.values())[0]
 
-        if self.method == "GET" or self.method == "DELETE":
+        if self.method in ["GET", "DELETE"]:
             if not isinstance(contents, list):
                 return (None, 606, "The content container type must be a list for GET and DELETE")
 
@@ -87,15 +89,29 @@ class QueryParser:
             if not isinstance(contents, dict):
                 return (None, 606, "The content container type must be dict for POST, PUT, and PATCH")
 
-        args, _ = self.parser._inner_parser.parse_known_args(args_str.split())
+        # rpartition places the alias string on the right
+        # if there are no aliases given then the arg string is placed on the right
+        args_str, _, alias = args_str.rpartition("|")
+
+        if not args_str and alias:
+            args_str = alias
+            alias = ""
+
+        try:
+            args, _ = self.parser._inner_parser.parse_known_args(
+                args_str.split())
+        except QueryBuilderError as e:
+            return (None, 614, e.msg)
+        except ArgumentError as e:
+            return (None, 614, e.message)
 
         if self.method in ["GET", "DELETE"]:
             if isinstance(contents, list):
-                return (ListQuery(args=args, contents=contents, query=args_str), None, None)
+                return (ListQuery(args=args, contents=contents, query=args_str, alias=alias.strip()), None, None)
 
         else:
             if isinstance(contents, dict):
-                return (DictQuery(args=args, contents=contents, query=args_str), None, None)
+                return (DictQuery(args=args, contents=contents, query=args_str, alias=alias.strip()), None, None)
 
         return (None, 600, err_msg(600))
 
@@ -109,6 +125,7 @@ class BlockParser:
     def __init__(self, block: blockType, methods_dict: Dict[str, Optional[QueryBuilder]]) -> None:
         self.block = block
         self.methods_dict = methods_dict
+        self.block_query_aliases: List[str] = []
 
     def parse(self) -> Union[Tuple[ExecutionBlock, None, None], Tuple[None, int, str]]:
         header, err, msg = HeaderParser(list(self.block.keys())[0]).parse()
@@ -145,12 +162,17 @@ class BlockParser:
                     if query:
                         queries.append(query)
 
+                        if query.alias:
+                            if query.alias in self.block_query_aliases:
+                                return (None, 613, err_msg(613) + f" id:{header.id}; alias: {query.alias}")
+                            else:
+                                self.block_query_aliases.append(query.alias)
+
                     else:
                         if err and msg:
                             return (None, err, msg)
 
                 else:
                     return (None, 607, f"Parser does not exists for {header.method!r}")
-
             return (ExecutionBlock(header=header, after=after, query=queries), None, None)
         return (None, 600, err_msg(600))

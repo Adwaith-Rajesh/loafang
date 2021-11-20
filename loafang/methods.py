@@ -19,17 +19,17 @@ class Methods:
         self.delete_query_parser: Optional[QueryBuilder] = None
         self.patch_query_parser: Optional[QueryBuilder] = None
 
-    def get(self, args: Namespace, content: List[str]) -> Any:
+    def get(self, args: Namespace, contents: List[str]) -> Any:
         raise NotImplementedError("GET is not implemented")
 
-    def post(self, args: Namespace, content: Dict[str, Any]) -> Any:
+    def post(self, args: Namespace, contents: Dict[str, Any]) -> Any:
         raise NotImplementedError("POST is not implemented")
 
-    def put(self, args: Namespace, content: Dict[str, Any]) -> Any:
+    def put(self, args: Namespace, contents: Dict[str, Any]) -> Any:
         raise NotImplementedError("PUT is not implemented")
 
-    def delete(self, args: Namespace, content: List[str]) -> Any:
+    def delete(self, args: Namespace, contents: List[str]) -> Any:
         raise NotImplementedError("DELETE is not implemented")
 
-    def patch(self, args: Namespace, content: Dict[str, Any]) -> Any:
+    def patch(self, args: Namespace, contents: Dict[str, Any]) -> Any:
         raise NotImplementedError("PATCH is not implemented")

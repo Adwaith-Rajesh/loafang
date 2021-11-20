@@ -21,6 +21,7 @@ class ListQuery:
     args: Namespace
     query: str  # the original query that was sent
     contents: List[str] = field(default_factory=list)
+    alias: Optional[str] = None
 
 
 @dataclass
@@ -29,6 +30,7 @@ class DictQuery:
     args: Namespace
     query: str
     contents: Dict[str, Any] = field(default_factory=dict)
+    alias: Optional[str] = None
 
 
 @dataclass
