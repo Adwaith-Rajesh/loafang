@@ -10,6 +10,7 @@ from ._dataclasses import ExecutionBlock
 from ._dataclasses import ParserState
 from ._parsers import BlockParser
 from .methods import Methods
+from .methods import MethodsError
 
 
 dataType = Dict[str, Dict[str, Union[List[str], Dict[str, Any], str]]]
@@ -44,7 +45,11 @@ def block_executor(ebs: List[ExecutionBlock], pes: List[ExecutionBlock], methods
             except NotImplementedError:
                 block_output_err = (
                     None, 611, f"{block.header.method!r} is not implemented")
-                print(block.header.id)
+                return None
+            except MethodsError as e:
+                block_output_err = (
+                    None, e.code, e.msg
+                )
                 return None
 
         if block.after:

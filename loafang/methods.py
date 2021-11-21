@@ -9,6 +9,16 @@ if TYPE_CHECKING:
     from .query import QueryBuilder
 
 
+class MethodsError(Exception):
+
+    def __init__(self, code: int = 614, msg: str = "Some error occurred") -> None:
+        self.code = code
+        self.msg = msg
+
+    def __str__(self) -> str:
+        return f"{self.code} {self.msg}"
+
+
 # this class is what is used to generate the output for the each query in the execution block
 class Methods:
 
