@@ -4,7 +4,7 @@ from typing import Sequence
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
-    print("Hello World")
+    print("Loafang: https://Adwaith-Rajesh.github.io/loafang")
     return 0
 
 
